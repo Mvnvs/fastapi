@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, UploadFile
 from fastapi.responses import StreamingResponse
 from diffusers import StableDiffusionImg2ImgPipeline, DPMSolverMultistepScheduler
@@ -57,10 +58,9 @@ async def generate_image(file: UploadFile):
     # Retourner l'image sous forme de réponse HTTP
     return StreamingResponse(buffer, media_type="image/png")
 
-# Ajoute ceci pour utiliser le port défini par Render
+# Ajoute la gestion dynamique du port avec la variable d'environnement `PORT`
 if __name__ == "__main__":
     import uvicorn
-    import os
 
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
