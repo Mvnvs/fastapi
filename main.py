@@ -5,6 +5,10 @@ from diffusers import StableDiffusionImg2ImgPipeline, DPMSolverMultistepSchedule
 import torch
 from PIL import Image
 from io import BytesIO
+import os
+
+# Définir le répertoire de cache pour Transformers
+os.environ["TRANSFORMERS_CACHE"] = "/app/cache"
 
 
 # Initialisation de l'application FastAPI
@@ -15,7 +19,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 dtype = torch.float16 if device == "cuda" else torch.float32
 
 pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
-    "digiplay/majicMIX_realistic_v7", torch_dtype=dtype
+    "digiplay/majicMIX_realistic_v7", torch_dtype=dtype, low_cpu_mem_usage=True
 )
 pipe = pipe.to(device)
 pipe.safety_checker = None
