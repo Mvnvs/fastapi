@@ -6,6 +6,7 @@ import torch
 from PIL import Image
 from io import BytesIO
 
+
 # Initialisation de l'application FastAPI
 app = FastAPI()
 
